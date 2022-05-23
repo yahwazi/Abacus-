@@ -1,0 +1,5 @@
+//Import Module - MindKey-Rest.psm1
+Import-Module ("C:\Users\yahwazi\OneDrive - KPMG\Desktop\MindKey-Rest.psm1") -Force
+
+// Connect to the API using the Connect-MindKeyRest method provided by the module:
+Connect-MindKeyRest “https://integration.mindkey.com” -CertificateThumbprint 1183BD6221A620E17C4B9CA4B6BC47286A6DD3F3 -CustomerId 350451B3-F884-4940-B01C-66EA2F57C758
