@@ -323,7 +323,7 @@ try
     $bodyCurrentInnerJoin = @{
 	    columns = $columns  
 	    positionMode = "CurrentInnerJoin"
-	    positionColumns = $positionColumns 
+	    positionColumns = $positionColumnsAll 
     }
 
 
@@ -347,7 +347,7 @@ try
     $bodyFurureInnerJoin = @{
 	    columns = $columns  
 	    positionMode = "FutureInnerJoin"
-	    positionColumns = $positionColumns 
+	    positionColumns = $positionColumnsAll 
         customSearchCondition =  @(@{ condition = "TransDate"; value = $futureDate; onlyParameter = $true}) #Future Employments from this date
     }
 
