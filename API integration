@@ -1,30 +1,13 @@
 //Import Module - MindKey-Rest.psm1
 Add-Type -Path ("C:\Users\yahwazi\OneDrive - KPMG\Desktop\Abacus Medicine\Mindkey files\MindKeyRestException.cs")
 Import-Module ("C:\Users\yahwazi\OneDrive - KPMG\Desktop\Abacus Medicine\Mindkey files\MindKey-Rest.psm1") -Force
-Import-Module ("C:\Users\yahwazi\OneDrive - KPMG\Desktop\Abacus Medicine\Mindkey files\MindKey-Log.psm1") -Force
 Import-Module ("C:\Users\yahwazi\OneDrive - KPMG\Desktop\Abacus Medicine\Mindkey files\MindKey-Tools.psm1") -Force
 
 // Connect to the API using the Connect-MindKeyRest method provided by the module:
 Connect-MindKeyRest “https://integration.mindkey.com” -CertificateThumbprint 1183BD6221A620E17C4B9CA4B6BC47286A6DD3F3 -CustomerId 350451B3-F884-4940-B01C-66EA2F57C758
 
 
-PS C:\Users\yahwazi> $Settings = @{
-TargetEntities = $ConfigFile.Settings.Setup.TargetEntities
-Exception = $ConfigFile.Settings.Setup.Exception
-Tools = $ConfigFile.Settings.Setup.Tools
-Rest = $ConfigFile.Settings.Setup.Rest
-Log = $ConfigFile.Settings.Setup.Log
-ServiceUrl = $ConfigFile.Settings.Setup.ServiceUrl
-CertificateThumbprint = $ConfigFile.Settings.Setup.CertificateThumbprint
-CustomerId = $ConfigFile.Settings.Setup.CustomerId
-XmlFile = $ConfigFile.Settings.Files.XmlFile
-CsvFile = $ConfigFile.Settings.Files.CsvFile
-LogFile = $ConfigFile.Settings.Files.LogFile
-Encoding = $ConfigFile.Settings.Files.Encoding
-}
-
- New-Log -OutputWindowLevel 2 -FileLevel 2 -LogFileName $Settings.LogFile -EventLogLevel 0
- Add-Info ("Export Start")
+//Body
  
  function WriteEmployeeTarget
 {
@@ -361,18 +344,9 @@ try
     }
 
 
-    # Sample - Add some lines to the log
-    foreach($Employee in $Employees) 
-    { 
-        Add-Info ("Processing: " + $Employee.EmployeeId + " " + $Employee.Name_FullName+ " Hired: " + $Employee.HiredDate+ " Terminated: " + $Employee.TerminatedDate) -UpdateRecordCount 1
-    }
-
-
-
-
     # Format and save Csv file
     Add-Info ("Exporting Csv File")
-    $Employees | Export-Csv $Settings.CsvFile -encoding $Settings.Encoding -NoTypeInformation -Delimiter ";" 
+    $Employees | Export-Csv -Path C:\Users\yahwazi\OneDrive - KPMG\Desktop\Abacus Medicine\test2.csv -NoTypeInformation -Delimiter ";" 
 
 
 }
@@ -381,6 +355,3 @@ catch
     Add-Error "An critical error occured while creating export file: $($_.Exception)"
 }
 
-
-Complete-Log "Export Finished" > $null
- 
