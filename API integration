@@ -1,5 +1,386 @@
 //Import Module - MindKey-Rest.psm1
-Import-Module ("C:\Users\yahwazi\OneDrive - KPMG\Desktop\MindKey-Rest.psm1") -Force
+Add-Type -Path ("C:\Users\yahwazi\OneDrive - KPMG\Desktop\Abacus Medicine\Mindkey files\MindKeyRestException.cs")
+Import-Module ("C:\Users\yahwazi\OneDrive - KPMG\Desktop\Abacus Medicine\Mindkey files\MindKey-Rest.psm1") -Force
+Import-Module ("C:\Users\yahwazi\OneDrive - KPMG\Desktop\Abacus Medicine\Mindkey files\MindKey-Log.psm1") -Force
+Import-Module ("C:\Users\yahwazi\OneDrive - KPMG\Desktop\Abacus Medicine\Mindkey files\MindKey-Tools.psm1") -Force
 
 // Connect to the API using the Connect-MindKeyRest method provided by the module:
 Connect-MindKeyRest “https://integration.mindkey.com” -CertificateThumbprint 1183BD6221A620E17C4B9CA4B6BC47286A6DD3F3 -CustomerId 350451B3-F884-4940-B01C-66EA2F57C758
+
+
+PS C:\Users\yahwazi> $Settings = @{
+TargetEntities = $ConfigFile.Settings.Setup.TargetEntities
+Exception = $ConfigFile.Settings.Setup.Exception
+Tools = $ConfigFile.Settings.Setup.Tools
+Rest = $ConfigFile.Settings.Setup.Rest
+Log = $ConfigFile.Settings.Setup.Log
+ServiceUrl = $ConfigFile.Settings.Setup.ServiceUrl
+CertificateThumbprint = $ConfigFile.Settings.Setup.CertificateThumbprint
+CustomerId = $ConfigFile.Settings.Setup.CustomerId
+XmlFile = $ConfigFile.Settings.Files.XmlFile
+CsvFile = $ConfigFile.Settings.Files.CsvFile
+LogFile = $ConfigFile.Settings.Files.LogFile
+Encoding = $ConfigFile.Settings.Files.Encoding
+}
+
+ New-Log -OutputWindowLevel 2 -FileLevel 2 -LogFileName $Settings.LogFile -EventLogLevel 0
+ Add-Info ("Export Start")
+ 
+ function WriteEmployeeTarget
+{
+    Param([parameter(Mandatory=$true)]
+		[PSCustomObject]$employee)
+    $EmployeeExportTarget.EmployeeId = $employee.EmployeeId
+    $EmployeeExportTarget.Name_FirstName = $employee.Name_FirstName
+    $EmployeeExportTarget.Name_MiddleName = $employee.Name_MiddleName
+    $EmployeeExportTarget.Name_LastName = $employee.Name_LastName
+    $EmployeeExportTarget.Name_FullName = $employee.Name_FullName
+    $EmployeeExportTarget.Salutation = $employee.Salutation
+    $EmployeeExportTarget.NickName = $employee.NickName
+    $EmployeeExportTarget.Address_Street = $employee.Address_Street
+    $EmployeeExportTarget.Address_City = $employee.Address_City
+    $EmployeeExportTarget.Address_StateProvince = $employee.Address_StateProvince
+    $EmployeeExportTarget.Address_ZipPostalCode = $employee.Address_ZipPostalCode
+    $EmployeeExportTarget.Address_CountryRegion = $employee.Address_CountryRegion
+    $EmployeeExportTarget.Address_Address = $employee.Address_Address
+    $EmployeeExportTarget.SocialSecurityNumber = $employee.SocialSecurityNumber
+    $EmployeeExportTarget.NationalityId = $employee.NationalityId
+    $EmployeeExportTarget.LanguageId = $employee.LanguageId
+    $EmployeeExportTarget.Email = $employee.Email
+    $EmployeeExportTarget.Url = $employee.Url
+    $EmployeeExportTarget.MaritalStatus = $employee.MaritalStatus
+    $EmployeeExportTarget.Gender = $employee.Gender
+    $EmployeeExportTarget.BirthDate = $employee.BirthDate
+    $EmployeeExportTarget.SeniorityDate = $employee.SeniorityDate
+    $EmployeeExportTarget.HomePhoneNumber_CountryName = $employee.HomePhoneNumber_CountryName
+    $EmployeeExportTarget.HomePhoneNumber_CityAreaCode = $employee.HomePhoneNumber_CityAreaCode
+    $EmployeeExportTarget.HomePhoneNumber_LocalNumber = $employee.HomePhoneNumber_LocalNumber
+    $EmployeeExportTarget.HomePhoneNumber_Extension = $employee.HomePhoneNumber_Extension
+    $EmployeeExportTarget.HomePhoneNumber_FullPhoneNumber = $employee.HomePhoneNumber_FullPhoneNumber
+    $EmployeeExportTarget.WorkPhoneNumber_CountryName = $employee.WorkPhoneNumber_CountryName
+    $EmployeeExportTarget.WorkPhoneNumber_CityAreaCode = $employee.WorkPhoneNumber_CityAreaCode
+    $EmployeeExportTarget.WorkPhoneNumber_LocalNumber = $employee.WorkPhoneNumber_LocalNumber
+    $EmployeeExportTarget.WorkPhoneNumber_Extension = $employee.WorkPhoneNumber_Extension
+    $EmployeeExportTarget.WorkPhoneNumber_FullPhoneNumber = $employee.WorkPhoneNumber_FullPhoneNumber
+    $EmployeeExportTarget.MobilePhoneNumber_CountryName = $employee.MobilePhoneNumber_CountryName
+    $EmployeeExportTarget.MobilePhoneNumber_CityAreaCode = $employee.MobilePhoneNumber_CityAreaCode
+    $EmployeeExportTarget.MobilePhoneNumber_LocalNumber = $employee.MobilePhoneNumber_LocalNumber
+    $EmployeeExportTarget.MobilePhoneNumber_Extension = $employee.MobilePhoneNumber_Extension
+    $EmployeeExportTarget.MobilePhoneNumber_FullPhoneNumber = $employee.MobilePhoneNumber_FullPhoneNumber
+    $EmployeeExportTarget.UserId = $employee.UserId
+    $EmployeeExportTarget.LanguageCultureId = $employee.LanguageCultureId
+    $EmployeeExportTarget.RegionCultureId = $employee.RegionCultureId
+    $EmployeeExportTarget.ActiveUser = $employee.ActiveUser
+    $EmployeeExportTarget.Active = $employee.Active
+    $EmployeeExportTarget.PreventAutoEnable = $employee.PreventAutoEnable
+    $EmployeeExportTarget.PreventAutoDisable = $employee.PreventAutoDisable
+    $EmployeeExportTarget.Initials = $employee.Initials
+    $EmployeeExportTarget.JubileeDate = $employee.JubileeDate
+    $EmployeeExportTarget.PrivateEmail = $employee.PrivateEmail
+    $EmployeeExportTarget.PrivateMobilePhoneNumber_CountryName = $employee.PrivateMobilePhoneNumber_CountryName
+    $EmployeeExportTarget.PrivateMobilePhoneNumber_CityAreaCode = $employee.PrivateMobilePhoneNumber_CityAreaCode
+    $EmployeeExportTarget.PrivateMobilePhoneNumber_LocalNumber = $employee.PrivateMobilePhoneNumber_LocalNumber
+    $EmployeeExportTarget.PrivateMobilePhoneNumber_Extension = $employee.PrivateMobilePhoneNumber_Extension
+    $EmployeeExportTarget.PrivateMobilePhoneNumber_FullPhoneNumber = $employee.PrivateMobilePhoneNumber_FullPhoneNumber
+    $EmployeeExportTarget.AccountNumber = $employee.AccountNumber
+    $EmployeeExportTarget.AccountRegNumber = $employee.AccountRegNumber
+    $EmployeeExportTarget.Iban = $employee.Iban
+    $EmployeeExportTarget.Swift = $employee.Swift
+    $EmployeeExportTarget.CarLicensePlate = $employee.CarLicensePlate
+    $EmployeeExportTarget.Longitude = $employee.Longitude
+    $EmployeeExportTarget.Latitude = $employee.Latitude
+    $EmployeeExportTarget.ExternalReference = $employee.ExternalReference
+    $EmployeeExportTarget.OptionalUserId = $employee.OptionalUserId
+    $EmployeeExportTarget.RowNumber = $employee.RowNumber
+    $EmployeeExportTarget.CreatedBy = $employee.CreatedBy
+    $EmployeeExportTarget.CreatedDateTime = $employee.CreatedDateTime
+    $EmployeeExportTarget.ModifiedBy = $employee.ModifiedBy
+    $EmployeeExportTarget.ModifiedDateTime = $employee.ModifiedDateTime
+    $EmployeeExportTarget.VersionStamp = $employee.VersionStamp
+    $EmployeeExportTarget.DocumentsExists = $employee.DocumentsExists
+    $EmployeeExportTarget.HiredDate = $employee.HiredDate
+    $EmployeeExportTarget.TerminatedDate = $employee.TerminatedDate
+    $EmployeeExportTarget.RunningEmployment = $employee.RunningEmployment
+    $EmployeeExportTarget.PositionExists = $employee.PositionExists
+    $EmployeeExportTarget.PictureThumbnail = $employee.PictureThumbnail
+    $EmployeeExportTarget.LanguageCulture_Name = $employee.LanguageCulture_Name
+    $EmployeeExportTarget.RegionCulture_Name = $employee.RegionCulture_Name
+    $EmployeeExportTarget.PositionVersion_PositionId = $employee.PositionVersion_PositionId
+    $EmployeeExportTarget.PositionVersion_Title = $employee.PositionVersion_Title
+    $EmployeeExportTarget.PositionVersion_JobId = $employee.PositionVersion_JobId
+    $EmployeeExportTarget.PositionVersion_ManagerPositionId = $employee.PositionVersion_ReportsTo
+    $EmployeeExportTarget.PositionVersion_SecondaryManagerPositionId = $employee.PositionVersion_SecondaryManagerId
+    $EmployeeExportTarget.PositionVersion_LocationId = $employee.PositionVersion_LocationId
+    $EmployeeExportTarget.PositionVersion_OrganizationId = $employee.PositionVersion_OrganizationId
+    $EmployeeExportTarget.PositionVersion_EmployeeId = $employee.PositionVersion_EmployeeId
+    $EmployeeExportTarget.PositionVersion_ValidFrom = $employee.PositionVersion_ValidFrom
+    $EmployeeExportTarget.PositionVersion_ValidTo = $employee.PositionVersion_ValidTo
+    $EmployeeExportTarget.PositionVersion_EmploymentCategoryName = $employee.PositionVersion_EmploymentCategoryName
+    $EmployeeExportTarget.PositionVersion_WorkingHours = $employee.PositionVersion_WorkingHours
+    $EmployeeExportTarget.PositionVersion_Frequency = $employee.PositionVersion_Frequency
+    $EmployeeExportTarget.PositionVersion_WorkCalendarName = $employee.PositionVersion_WorkCalendarName
+    $EmployeeExportTarget.PositionVersion_Office = $employee.PositionVersion_Office
+    $EmployeeExportTarget.PositionVersion_Dimension1Id = $employee.PositionVersion_Dimension1Id
+    $EmployeeExportTarget.PositionVersion_Dimension2Id = $employee.PositionVersion_Dimension2Id
+    $EmployeeExportTarget.PositionVersion_Dimension3Id = $employee.PositionVersion_Dimension3Id
+    $EmployeeExportTarget.PositionVersion_Dimension4Id = $employee.PositionVersion_Dimension4Id
+    $EmployeeExportTarget.PositionVersion_ActualValidFrom = $employee.PositionVersion_ActualValidFrom
+    $EmployeeExportTarget.PositionVersion_ActualValidTo = $employee.PositionVersion_ActualValidTo
+    $EmployeeExportTarget.PositionVersion_Released = $employee.PositionVersion_Released
+    $EmployeeExportTarget.PositionVersion_LeaveGroupName = $employee.PositionVersion_LeaveGroupName
+    $EmployeeExportTarget.PositionVersion_MileageGroupName = $employee.PositionVersion_MileageGroupName
+    $EmployeeExportTarget.PositionVersion_TimeTrackingGroupName = $employee.PositionVersion_TimeTrackingGroupName
+    $EmployeeExportTarget.PositionVersion_SettlementId = $employee.PositionVersion_SettlementId
+    $EmployeeExportTarget.PositionVersion_HireReasonCodeId = $employee.PositionVersion_HireReasonCodeId
+    $EmployeeExportTarget.PositionVersion_TerminateReasonCodeId = $employee.PositionVersion_TerminateReasonCodeId
+    $EmployeeExportTarget.PositionVersion_Fte = $employee.PositionVersion_Fte
+    $EmployeeExportTarget.PositionVersion_FullTimeWorkingHours = $employee.PositionVersion_FullTimeWorkingHours
+    $EmployeeExportTarget.PositionVersion_WorkingHoursExpected = $employee.PositionVersion_WorkingHoursExpected
+    $EmployeeExportTarget.PositionVersion_Note = $employee.PositionVersion_Note
+    $EmployeeExportTarget.PositionVersion_EmployeeCleanUp = $employee.PositionVersion_EmployeeCleanUp
+    $EmployeeExportTarget.PositionVersion_SupplementalPayGroupName = $employee.PositionVersion_SupplementalPayGroupName
+    $EmployeeExportTarget.PositionVersion_ExternalReference = $employee.PositionVersion_ExternalReference
+    $EmployeeExportTarget.PositionVersion_RowNumber = $employee.PositionVersion_RowNumber
+    $EmployeeExportTarget.PositionVersion_CreatedBy = $employee.PositionVersion_CreatedBy
+    $EmployeeExportTarget.PositionVersion_CreatedDateTime = $employee.PositionVersion_CreatedDateTime
+    $EmployeeExportTarget.PositionVersion_ModifiedBy = $employee.PositionVersion_ModifiedBy
+    $EmployeeExportTarget.positionVersion_ModifiedDateTime = $employee.PositionVersion_ModifiedDateTime
+    $EmployeeExportTarget.positionVersion_VersionStamp = $employee.PositionVersion_VersionStamp
+    $EmployeeExportTarget.positionVersion_DocumentsExists = $employee.PositionVersion_DocumentsExists
+
+
+}
+
+
+#################################################################################################################################
+# Get Employees from MindKey and save to xml file
+#################################################################################################################################
+try
+{
+    Add-Info ("Fetching Employees")
+
+
+    # Setup columns (and display method's) to return
+    $EmployeeColumnsAll =   "EmployeeId
+                            ,Name_FirstName
+                            ,Name_MiddleName
+                            ,Name_LastName
+                            ,Name_FullName
+                            ,Salutation
+                            ,NickName
+                            ,Address_Street
+                            ,Address_City
+                            ,Address_StateProvince
+                            ,Address_ZipPostalCode
+                            ,Address_CountryRegion
+                            ,Address_Address
+                            ,SocialSecurityNumber
+                            ,NationalityId
+                            ,LanguageId
+                            ,Email
+                            ,Url
+                            ,MaritalStatus
+                            ,Gender
+                            ,BirthDate
+                            ,SeniorityDate
+                            ,HomePhoneNumber_CountryName
+                            ,HomePhoneNumber_CityAreaCode
+                            ,HomePhoneNumber_LocalNumber
+                            ,HomePhoneNumber_Extension
+                            ,HomePhoneNumber_FullPhoneNumber
+                            ,WorkPhoneNumber_CountryName
+                            ,WorkPhoneNumber_CityAreaCode
+                            ,WorkPhoneNumber_LocalNumber
+                            ,WorkPhoneNumber_Extension
+                            ,WorkPhoneNumber_FullPhoneNumber
+                            ,MobilePhoneNumber_CountryName
+                            ,MobilePhoneNumber_CityAreaCode
+                            ,MobilePhoneNumber_LocalNumber
+                            ,MobilePhoneNumber_Extension
+                            ,MobilePhoneNumber_FullPhoneNumber
+                            ,UserId
+                            ,LanguageCultureId
+                            ,RegionCultureId
+                            ,ActiveUser
+                            ,Active
+                            ,PreventAutoEnable
+                            ,PreventAutoDisable
+                            ,Initials
+                            ,JubileeDate
+                            ,PrivateEmail
+                            ,PrivateMobilePhoneNumber_CountryName
+                            ,PrivateMobilePhoneNumber_CityAreaCode
+                            ,PrivateMobilePhoneNumber_LocalNumber
+                            ,PrivateMobilePhoneNumber_Extension
+                            ,PrivateMobilePhoneNumber_FullPhoneNumber
+                            ,AccountNumber
+                            ,AccountRegNumber
+                            ,Iban
+                            ,Swift
+                            ,CarLicensePlate
+                            ,Longitude
+                            ,Latitude
+                            ,ExternalReference
+                            ,OptionalUserId
+                            ,RowNumber
+                            ,CreatedBy
+                            ,CreatedDateTime
+                            ,ModifiedBy
+                            ,ModifiedDateTime
+                            ,VersionStamp
+                            ,DocumentsExists
+                            ,HiredDate
+                            ,TerminatedDate
+                            ,RunningEmployment
+                            ,PositionExists  
+                            ,PictureThumbnail
+                            ,LanguageCulture_Name
+                            ,RegionCulture_Name
+                            "
+
+
+    $positionColumnsAll =   "PositionId
+                            ,Title
+                            ,JobId
+                            ,ReportsTo
+                            ,SecondaryManagerId
+                            ,LocationId
+                            ,OrganizationId
+                            ,EmployeeId
+                            ,ValidFrom
+                            ,ValidTo
+                            ,EmploymentCategoryName
+                            ,WorkingHours
+                            ,Frequency
+                            ,WorkCalendarName
+                            ,Office
+                            ,Dimension1Id
+                            ,Dimension2Id
+                            ,Dimension3Id
+                            ,Dimension4Id
+                            ,ActualValidFrom
+                            ,ActualValidTo
+                            ,Released
+                            ,LeaveGroupName
+                            ,MileageGroupName
+                            ,TimeTrackingGroupName
+                            ,SettlementId
+                            ,HireReasonCodeId
+                            ,TerminateReasonCodeId
+                            ,Fte
+                            ,FullTimeWorkingHours
+                            ,WorkingHoursExpected
+                            ,Note
+                            ,EmployeeCleanUp
+                            ,SupplementalPayGroupName
+                            ,ExternalReference
+                            ,RowNumber
+                            ,CreatedBy
+                            ,CreatedDateTime
+                            ,ModifiedBy
+                            ,ModifiedDateTime
+                            ,VersionStamp
+                            ,DocumentsExists
+                            "
+
+    # Get Employees terminated in position "Fuldtid" within the last two years
+    $now = Get-Date
+    $terminatedAfterDate = "$($now.AddYears($(-2)).ToString("yyyy-MM-dd"))T00:00:00"
+
+
+    $bodyTerminatedInnerJoin = @{
+	    columns = $EmployeeColumnsAll  
+	    positionMode = "TerminatedInnerJoin"
+	    positionColumns = $positionColumnsAll 
+        customSearchCondition = @(@{
+            condition     = "TransDate";
+            value         = $terminatedAfterDate;
+            onlyParameter = $true
+      })
+    }
+    
+         
+    $EmployeesTerminatedInnerJoinList = (Invoke-MindKeyRestPost "employees/find" -InputObject $bodyTerminatedInnerJoin) | Where-Object {$_.PositionVersion_EmploymentCategoryName -eq "Fuldtid"} | Sort-Object {$_.Name_FullName}
+
+
+    # add terminated to totalList
+    foreach($EmployeesTerminatedInnerJoin in $EmployeesTerminatedInnerJoinList) 
+    { 
+        $EmployeeExportTarget = New-Object MindKey.Service.Target.EmployeeAllFieldsTarget
+
+
+        WriteEmployeeTarget -employee $EmployeesTerminatedInnerJoin
+
+
+        $EmployeeExportList += $EmployeeExportTarget
+
+
+    }
+    
+    
+
+    # Get Employees current position "Fuldtid"
+    $bodyCurrentInnerJoin = @{
+	    columns = $columns  
+	    positionMode = "CurrentInnerJoin"
+	    positionColumns = $positionColumns 
+    }
+
+
+    $EmployeesCurrentInnerJoinList = (Invoke-MindKeyRestPost "employees/find" -InputObject $bodyCurrentInnerJoin) | Where-Object {$_.PositionVersion_EmploymentCategoryName -eq "Fuldtid"}
+
+
+    # add current to totalList
+    if ($EmployeesCurrentInnerJoinList)
+    {
+        $Employees += $EmployeesCurrentInnerJoinList 
+    }
+    
+    
+
+
+
+    # Get Employees in future position "Fuldtid" from the last two years
+    $futureDate = "$($now.AddYears($(-2)).ToString("yyyy-MM-dd"))T00:00:00"
+
+
+    $bodyFurureInnerJoin = @{
+	    columns = $columns  
+	    positionMode = "FutureInnerJoin"
+	    positionColumns = $positionColumns 
+        customSearchCondition =  @(@{ condition = "TransDate"; value = $futureDate; onlyParameter = $true}) #Future Employments from this date
+    }
+
+    $EmployeesFutureInnerJoinList = (Invoke-MindKeyRestPost "employees/find" -InputObject $bodyFurureInnerJoin) | Where-Object {$_.PositionVersion_EmploymentCategoryName -eq "Fuldtid"}
+    
+
+    # add current to totalList
+    if ($EmployeesFutureInnerJoinList)
+    {
+        $Employees += $EmployeesFutureInnerJoinList 
+    }
+
+
+    # Sample - Add some lines to the log
+    foreach($Employee in $Employees) 
+    { 
+        Add-Info ("Processing: " + $Employee.EmployeeId + " " + $Employee.Name_FullName+ " Hired: " + $Employee.HiredDate+ " Terminated: " + $Employee.TerminatedDate) -UpdateRecordCount 1
+    }
+
+
+
+
+    # Format and save Csv file
+    Add-Info ("Exporting Csv File")
+    $Employees | Export-Csv $Settings.CsvFile -encoding $Settings.Encoding -NoTypeInformation -Delimiter ";" 
+
+
+}
+catch
+{
+    Add-Error "An critical error occured while creating export file: $($_.Exception)"
+}
+
+
+Complete-Log "Export Finished" > $null
+ 
