@@ -352,6 +352,6 @@ try
 }
 catch
 {
-    Add-Error "An critical error occured while creating export file: $($_.Exception)"
+    
 }
 
