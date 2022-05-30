@@ -11,49 +11,49 @@ Connect-MindKeyRest “https://integration.mindkey.com” -CertificateThumbprint
  
 $body = @{ 
 
-        columns = " EmployeeID,
-Name_FirstName,
-Name_MiddleName,
-Name_LastName,
-Name_FullName,
-Address_City,
-Address_ZipPostalCode,
-Address_CountryRegion,
-SocialSecurityNumber,
-NationalityID,
-Email,
-MaritalStatus,
-Gender,
-BirthDate,
-SeniorityDate,
-UserId,
-ActiveUser,
-Active,
-JubileeDate,
-CreatedDateTime,
-ModifiedDateTime,
-VersionStamp,
-HireDate,
-TerminatedDate,
-PositionId,
-PositionVersion_Title,
-PositionVersion_JobId,
-PositionVersion_ReportsTo,
-LocationId,
-OrganizationId,
-PositionVersion_EmployeeId,
-PositionVersion_ValidFrom,
-PositionVersion_ValidTo,
-PositionVersion_WorkingHours,
-PositionVersion_Frequency,
-PositionVersion_Office,
-PositionVersion_Dimension1ID,
-PositionVersion_LeaveGroupName,
-PositionVersion_HireReasonCodeId,
-PositionVersion_TerminationReasonCodeId,
-PositionVersion_Fte,
-PositionVersion_FullTimeWorkingHours,
-PositionVersion_WorkingHoursExpected" 
+        columns = "EmployeeID
+Name_FirstName
+Name_MiddleName
+Name_LastName
+Name_FullName
+Address_City
+Address_ZipPostalCode
+Address_CountryRegion
+SocialSecurityNumber
+NationalityID
+Email
+MaritalStatus
+Gender
+BirthDate
+SeniorityDate
+UserId
+ActiveUser
+Active
+JubileeDate
+CreatedDateTime
+ModifiedDateTime
+VersionStamp
+HiredDate
+TerminatedDate
+PositionId
+Position_Title
+Position_JobId
+Position_ReportsTo
+LocationId
+OrganizationId
+Position_EmployeeId
+Position_ValidFrom
+Position_ValidTo
+Position_WorkingHours
+Position_Frequency
+Position_Office
+Position_Dimension1ID
+Position_LeaveGroupName
+Position_HireReasonCodeId
+Position_TerminationReasonCodeId
+Position_Fte
+Position_FullTimeWorkingHours
+Position_WorkingHoursExpected" 
 	
 } 
 
@@ -91,26 +91,26 @@ VersionStamp,
 HireDate,
 TerminatedDate,
 PositionId,
-PositionVersion_Title,
-PositionVersion_JobId,
-PositionVersion_ReportsTo,
+Position_Title,
+Position_JobId,
+Position_ReportsTo,
 LocationId,
 OrganizationId"
 
 
     $positionColumnsAll =   "PositionVersion_EmployeeId,
-PositionVersion_ValidFrom,
-PositionVersion_ValidTo,
-PositionVersion_WorkingHours,
-PositionVersion_Frequency,
-PositionVersion_Office,
-PositionVersion_Dimension1ID,
-PositionVersion_LeaveGroupName,
-PositionVersion_HireReasonCodeId,
-PositionVersion_TerminationReasonCodeId,
-PositionVersion_Fte,
-PositionVersion_FullTimeWorkingHours,
-PositionVersion_WorkingHoursExpected" 
+Position_ValidFrom,
+Position_ValidTo,
+Position_WorkingHours,
+Position_Frequency,
+Position_Office,
+Position_Dimension1ID,
+Position_LeaveGroupName,
+Position_HireReasonCodeId,
+Position_TerminationReasonCodeId,
+Position_Fte,
+Position_FullTimeWorkingHours,
+Position_WorkingHoursExpected" 
 
 
     # Get Employees terminated in position "Fuldtid" within the last two years
