@@ -1,0 +1,91 @@
+    $AbacusEmployeeColumnsAll = "EmployeeId
+                            ,Name_FirstName
+                            ,Name_MiddleName
+                            ,Name_LastName
+                            ,Name_FullName
+                            ,Salutation
+                            ,NickName
+                            ,Address_Street
+                            ,Address_City
+                            ,Address_StateProvince
+                            ,Address_ZipPostalCode
+                            ,Address_CountryRegion
+                            ,Address_Address
+                            ,SocialSecurityNumber
+                            ,NationalityId
+                            ,LanguageId
+                            ,Email
+                            ,Url
+                            ,MaritalStatus
+                            ,Gender
+                            ,BirthDate
+                            ,SeniorityDate
+                            ,HomePhoneNumber_CountryName
+                            ,HomePhoneNumber_CityAreaCode
+                            ,HomePhoneNumber_LocalNumber
+                            ,HomePhoneNumber_Extension
+                            ,HomePhoneNumber_FullPhoneNumber
+                            ,WorkPhoneNumber_CountryName
+                            ,WorkPhoneNumber_CityAreaCode
+                            ,WorkPhoneNumber_LocalNumber
+                            ,WorkPhoneNumber_Extension
+                            ,WorkPhoneNumber_FullPhoneNumber
+                            ,MobilePhoneNumber_CountryName
+                            ,MobilePhoneNumber_CityAreaCode
+                            ,MobilePhoneNumber_LocalNumber
+                            ,MobilePhoneNumber_Extension
+                            ,MobilePhoneNumber_FullPhoneNumber
+                            ,UserId
+                            ,LanguageCultureId
+                            ,RegionCultureId
+                            ,ActiveUser
+                            ,Active
+                            ,PreventAutoEnable
+                            ,PreventAutoDisable
+                            ,Initials
+                            ,JubileeDate
+                            ,PrivateEmail
+                            ,PrivateMobilePhoneNumber_CountryName
+                            ,PrivateMobilePhoneNumber_CityAreaCode
+                            ,PrivateMobilePhoneNumber_LocalNumber
+                            ,PrivateMobilePhoneNumber_Extension
+                            ,PrivateMobilePhoneNumber_FullPhoneNumber
+                            ,AccountNumber
+                            ,AccountRegNumber
+                            ,Iban
+                            ,Swift
+                            ,CarLicensePlate
+                            ,Longitude
+                            ,Latitude
+                            ,ExternalReference
+                            ,OptionalUserId
+                            ,RowNumber
+                            ,CreatedBy
+                            ,CreatedDateTime
+                            ,ModifiedBy
+                            ,ModifiedDateTime
+                            ,VersionStamp
+                            ,DocumentsExists
+                            ,HiredDate
+                            ,TerminatedDate
+                            ,RunningEmployment
+                            ,PositionExists  
+                            ,PictureThumbnail
+                            ,LanguageCulture_Name
+                            ,RegionCulture_Name
+                            "
+
+    $now = Get-Date
+    $terminatedAfterDate = "$($now.AddYears($(-2)).ToString("yyyy-MM-dd"))T00:00:00"
+                
+$AbacusBody = @{ 
+columns = $AbacusEmployeeColumnsAll  
+       customSearchCondition = @(@{
+            condition     = "TransDate";
+            value         = $terminatedAfterDate;
+            onlyParameter = $true
+      })
+    }
+    
+    $AbacusEmployees = Invoke-MindKeyRestPost "employees/find" -InputObject $AbacusBody
+    $AbacusEmployees | Export-Csv -Encoding "UTF8" -Path "C:\Users\yahwazi\OneDrive - KPMG\Desktop\Abacus Medicine\CurrentInnerJoin.csv" -NoTypeInformation -Delimiter ";" 
