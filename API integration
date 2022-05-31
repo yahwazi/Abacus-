@@ -336,7 +336,6 @@ try
 
 
     # Format and save Csv file
-    Add-Info ("Exporting Csv File")
     $Employees | Export-Csv -Path "C:\Users\yahwazi\OneDrive - KPMG\Desktop\Abacus Medicine\test2.csv" -NoTypeInformation -Delimiter ";" 
 
 
