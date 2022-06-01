@@ -1,0 +1,40 @@
+    $AbacuspositionColumnsAll =   "PositionId
+                                ,Title
+                            ,JobId
+                            ,ReportsTo
+                            ,SecondaryManagerId
+                            ,LocationId
+                            ,OrganizationId
+                            ,EmployeeId
+                            ,ValidFrom
+                            ,ValidTo
+                            ,EmploymentCategoryName
+                            ,WorkingHours
+                            ,Frequency
+                            ,WorkCalendarName
+                            ,Office
+                            ,Dimension1Id
+                            ,Dimension2Id
+                            ,Dimension3Id
+                            ,Dimension4Id
+                            ,ActualValidFrom
+                            ,ActualValidTo
+                            ,Released
+                            ,LeaveGroupName
+                            ,MileageGroupName
+                            ,TimeTrackingGroupName"
+
+    $now = Get-Date
+    $terminatedAfterDate = "$($now.AddYears($(-2)).ToString("yyyy-MM-dd"))T00:00:00"
+                
+$AbacusBody = @{ 
+columns = $AbacusEmployeeColumnsAll  
+       customSearchCondition = @(@{
+            condition     = "TransDate";
+            value         = $terminatedAfterDate;
+            onlyParameter = $true
+      })
+    }
+    
+    $AbacusEmployees = Invoke-MindKeyRestPost "positionVersions/find" -InputObject $AbacusBody
+    $AbacusEmployees | Export-Csv -Encoding "UTF8" -Path "C:\Users\yahwazi\OneDrive - KPMG\Desktop\Abacus Medicine\FutureInnerJoin.csv" -NoTypeInformation -Delimiter ";" 
