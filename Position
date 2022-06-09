@@ -1,3 +1,9 @@
+Add-Type -Path ("C:\Users\yahwazi\OneDrive - KPMG\Desktop\Abacus Medicine\Mindkey files\MindKeyRestException.cs")
+Import-Module ("C:\Users\yahwazi\OneDrive - KPMG\Desktop\Abacus Medicine\Mindkey files\MindKey-Rest.psm1") -Force
+Import-Module ("C:\Users\yahwazi\OneDrive - KPMG\Desktop\Abacus Medicine\Mindkey files\MindKey-Tools.psm1") -Force
+
+Connect-MindKeyRest “https://integration.mindkey.com” -CertificateThumbprint 1183BD6221A620E17C4B9CA4B6BC47286A6DD3F3 -CustomerId 107341EE-35F3-46F4-A1EF-1396F1DC267D
+
     $AbacuspositionColumnsAll =   "PositionId
                                 ,Title
                             ,JobId
